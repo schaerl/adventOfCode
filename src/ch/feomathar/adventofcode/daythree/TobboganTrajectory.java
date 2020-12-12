@@ -2,16 +2,20 @@ package ch.feomathar.adventofcode.daythree;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.feomathar.adventofcode.ProgramError;
+
 public class TobboganTrajectory {
+    private TobboganTrajectory() {
+
+    }
 
     private static final int[][] INPUTS = new int[][] { new int[] { 1, 1 }, new int[] { 3, 1 }, new int[] { 5, 1 },
-                                                          new int[] { 7, 1 }, new int[] { 1, 2 } };
+                                                        new int[] { 7, 1 }, new int[] { 1, 2 } };
 
     public static int execute(String fileName) {
         Map map = parseInput(fileName);
@@ -19,13 +23,13 @@ public class TobboganTrajectory {
         for (int[] input : INPUTS) {
             treeCounts.add(countTrees(map, input[0], input[1]));
         }
-        return treeCounts.stream().reduce(1, (a,b) -> a*b);
+        return treeCounts.stream().reduce(1, (a, b) -> a * b);
     }
 
-    private static int countTrees(Map map, int horizShift, int vertShift){
+    private static int countTrees(Map map, int horizShift, int vertShift) {
         int treeCount = 0;
         int horizontalPosition = 0;
-        for (int i = 0; i < map.tiles.size(); i+=vertShift) {
+        for (int i = 0; i < map.tiles.size(); i += vertShift) {
             if (map.getTileAtHorizontalAndVertical(horizontalPosition, i) == Map.Terrain.TREE) {
                 treeCount++;
             }
@@ -42,10 +46,8 @@ public class TobboganTrajectory {
             while ((line = reader.readLine()) != null) {
                 result.extendMapBelow(Map.parseToTerrain(line));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ProgramError(e);
         }
 
         return result;
@@ -71,7 +73,7 @@ public class TobboganTrajectory {
                 } else if (c == '#') {
                     newLine.add(Terrain.TREE);
                 } else {
-                    throw new RuntimeException("INVALID TERRAIN CHAR");
+                    throw new ProgramError("INVALID TERRAIN CHAR");
                 }
             }
             return newLine;

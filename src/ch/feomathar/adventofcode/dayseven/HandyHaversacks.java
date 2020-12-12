@@ -2,22 +2,23 @@ package ch.feomathar.adventofcode.dayseven;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ch.feomathar.adventofcode.ProgramError;
+
 public class HandyHaversacks {
+    private HandyHaversacks() {
+
+    }
+
     private static final Pattern LINE_START = Pattern.compile("(.*) bags contain ");
     private static final Pattern REST_SPLIT = Pattern.compile("(\\d+) (.*) bag[s]?");
 
@@ -37,7 +38,7 @@ public class HandyHaversacks {
                 String origin = m.group(1);
                 List<ReachesMap.BagContents> reaches = new ArrayList<>();
                 String rest = line.substring(m.group(0).length());
-                if (rest.startsWith("no")){
+                if (rest.startsWith("no")) {
                     // do nothing to reaches
                 } else {
                     String[] splitUp = rest.split("[,\\.]");
@@ -49,10 +50,8 @@ public class HandyHaversacks {
                 }
                 rMap.addValue(origin, reaches);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ProgramError(e);
         }
         return rMap;
     }
@@ -61,11 +60,7 @@ public class HandyHaversacks {
         private final HashMap<String, Set<BagContents>> map = new HashMap<>();
 
         public void addValue(String from, List<BagContents> tos) {
-            Set<BagContents> existing = map.get(from);
-            if (existing == null) {
-                existing = new HashSet<>();
-                map.put(from, existing);
-            }
+            Set<BagContents> existing = map.computeIfAbsent(from, s -> new HashSet<>());
             existing.addAll(tos);
         }
 
@@ -104,7 +99,7 @@ public class HandyHaversacks {
             return sum;
         }
 
-        public static class BagContents{
+        public static class BagContents {
             int amount;
             String color;
 

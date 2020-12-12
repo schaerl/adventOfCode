@@ -6,15 +6,15 @@ private val INPUT = 265149
 
 fun findLoc(): Int {
     val ring = findRing(INPUT)
-    var number = ringEnd(ring-1)+1
-    var position = Pair(ring-1,ring)
+    var number = ringEnd(ring - 1) + 1
+    var position = Pair(ring - 1, ring)
     val appendable = ringWidth(ring) - 1
     val side = (INPUT - number) / appendable
     val sideDifference = (INPUT - number) % appendable
 
-    when(side){
+    when (side) {
         0 -> position = Pair(position.first - sideDifference, position.second)
-        1 -> position = Pair(position.first - appendable + 1, position.second -1 - sideDifference)
+        1 -> position = Pair(position.first - appendable + 1, position.second - 1 - sideDifference)
         2 -> position = Pair(position.first - appendable + 1 + sideDifference + 1, position.second - appendable)
         3 -> position = Pair(position.first + 1, position.second - appendable + 1 + sideDifference)
     }
@@ -22,13 +22,13 @@ fun findLoc(): Int {
     return position.first + position.second
 }
 
-fun generateWeird(): Int{
+fun generateWeird(): Int {
     val map = HashMap<Pair<Int, Int>, Int>()
-    var curr = Pair(0,0)
+    var curr = Pair(0, 0)
     map[curr] = 1
     var dir = Dir.DOWN         // 0 :r, 1: u, 2: l, 3: d
-    while(map[curr]!! < INPUT){
-        if(map[Pair(curr.first + dir.xOffCheck, curr.second + dir.yOffCheck)] == null){
+    while (map[curr]!! < INPUT) {
+        if (map[Pair(curr.first + dir.xOffCheck, curr.second + dir.yOffCheck)] == null) {
             dir = dir.getNextDir()
         }
         curr = Pair(curr.first + dir.xOffContinue, curr.second + dir.yOffContinue)
@@ -45,7 +45,7 @@ fun calculateSumOfSurrounding(map: HashMap<Pair<Int, Int>, Int>, curr: Pair<Int,
                 continue
             }
             val neighbour = map[Pair(curr.first + i, curr.second + j)]
-            if (neighbour != null){
+            if (neighbour != null) {
                 sum += neighbour
             }
         }
@@ -55,28 +55,28 @@ fun calculateSumOfSurrounding(map: HashMap<Pair<Int, Int>, Int>, curr: Pair<Int,
 
 fun findRing(input: Int): Int {
     var ring = 0
-    while(input > ringEnd(ring)){
+    while (input > ringEnd(ring)) {
         ring++
     }
     return ring
 }
 
-fun ringEnd(ring: Int ): Int {
+fun ringEnd(ring: Int): Int {
     return ringWidth(ring).toDouble().pow(2).toInt()
 }
 
 fun ringWidth(ring: Int): Int {
-    return 2*ring + 1
+    return 2 * ring + 1
 }
 
 enum class Dir(val xOffCheck: Int, val yOffCheck: Int, val xOffContinue: Int, val yOffContinue: Int) {
     RIGHT(0, 1, 1, 0),
     UP(-1, 0, 0, 1),
-    LEFT(0, -1,-1, 0),
+    LEFT(0, -1, -1, 0),
     DOWN(1, 0, 0, -1);
 
-    fun getNextDir():Dir{
-        return when(this){
+    fun getNextDir(): Dir {
+        return when (this) {
             RIGHT -> UP
             UP -> LEFT
             LEFT -> DOWN

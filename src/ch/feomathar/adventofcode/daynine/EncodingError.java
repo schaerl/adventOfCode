@@ -2,18 +2,20 @@ package ch.feomathar.adventofcode.daynine;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+
+import ch.feomathar.adventofcode.ProgramError;
 
 public class EncodingError {
 
+    private EncodingError() {
+
+    }
 
     public static long execute(String fileName) {
         List<Long> numbers = parseInput(fileName);
@@ -21,7 +23,7 @@ public class EncodingError {
         for (int i = 0; i < 25; i++) {
             rollingWindow.add(numbers.get(i));
         }
-        int index  = 0;
+        int index = 0;
         for (int i = 25; i < numbers.size(); i++) {
             if (!possibleSum(rollingWindow, numbers.get(i))) {
                 index = i;
@@ -32,7 +34,7 @@ public class EncodingError {
         }
         List<Long> test = contiguousRange(index, numbers);
         test.sort(Long::compareTo);
-        return test.get(0) + test.get(test.size()-1);
+        return test.get(0) + test.get(test.size() - 1);
     }
 
     private static List<Long> contiguousRange(int index, List<Long> numbers) {
@@ -56,7 +58,6 @@ public class EncodingError {
         for (int i = 0; i < summands.size() - 1; i++) {
             for (int j = i; j < summands.size(); j++) {
                 if (summands.get(i) + summands.get(j) == sum) {
-                    // System.out.printf("%s + %s = %s\n", summands.get(i), summands.get(j), sum);
                     return true;
                 }
             }
@@ -72,10 +73,8 @@ public class EncodingError {
             while ((line = reader.readLine()) != null) {
                 result.add(Long.parseLong(line));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ProgramError(e);
         }
         return result;
     }

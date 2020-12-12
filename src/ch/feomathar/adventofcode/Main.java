@@ -1,36 +1,9 @@
 package ch.feomathar.adventofcode;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import ch.feomathar.adventofcode.dayeight.HandheldHalting;
-import ch.feomathar.adventofcode.dayeleven.SeatingSystemKt;
-import ch.feomathar.adventofcode.dayfive.BinaryBoarding;
-import ch.feomathar.adventofcode.dayfour.PassportProcessing;
-import ch.feomathar.adventofcode.daynine.EncodingError;
-import ch.feomathar.adventofcode.dayone.CaptchaKt;
-import ch.feomathar.adventofcode.dayone.FrequencyKt;
-import ch.feomathar.adventofcode.dayone.ReportRepair;
-import ch.feomathar.adventofcode.dayone.RocketsKt;
-import ch.feomathar.adventofcode.dayone.TaxicabKt;
-import ch.feomathar.adventofcode.dayseven.HandyHaversacks;
-import ch.feomathar.adventofcode.daysix.CustomCustoms;
-import ch.feomathar.adventofcode.dayten.AdapterArray;
 import ch.feomathar.adventofcode.daythree.CrossedWiresKt;
-import ch.feomathar.adventofcode.daythree.InfiniteHouseKt;
-import ch.feomathar.adventofcode.daythree.SlicingKt;
-import ch.feomathar.adventofcode.daythree.SpiralMemoryKt;
-import ch.feomathar.adventofcode.daythree.TobboganTrajectory;
-import ch.feomathar.adventofcode.daythree.TrianglesKt;
-import ch.feomathar.adventofcode.daytwo.BathroomKt;
-import ch.feomathar.adventofcode.daytwo.CorruptionChecksumKt;
-import ch.feomathar.adventofcode.daytwo.InventoryKt;
-import ch.feomathar.adventofcode.daytwo.NotMathsKt;
-import ch.feomathar.adventofcode.daytwo.PasswordPhilosophy;
-import ch.feomathar.adventofcode.daytwo.ProgramAlarmKt;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // System.out.println(ReportRepair.execute2("src/resources/dayone/2020.txt", 2020));
         // System.out.println(PasswordPhilosophy.execute("src/resources/daytwo/2020.txt"));
         // System.out.println(TobboganTrajectory.execute("src/resources/daythree/2020.txt"));

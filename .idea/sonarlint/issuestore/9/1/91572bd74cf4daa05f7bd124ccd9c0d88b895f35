@@ -1,0 +1,15 @@
+
+l
+java:S11049"OMake max a static final constant or non-public and provide accessors if needed.(¢€ê×8Óâ’áä.
+p
+java:S1104;"NMake pw a static final constant or non-public and provide accessors if needed.(ÂøÍøÿÿÿÿ8û™€áä.
+q
+java:S11048"OMake min a static final constant or non-public and provide accessors if needed.(Ü—ùßÿÿÿÿÿ8Óâ’áä.
+\
+java:S1118":Add a private constructor to hide the implicit public one.(ŠòÂ ùÿÿÿÿ8¶ùõàä.
+w
+java:S1104:"UMake character a static final constant or non-public and provide accessors if needed.(“ğ¨™ûÿÿÿÿ8û™€áä.
+a
+java:S21471"DCombine this catch with the one at line 47, which has the same body.(ï­£Ä8äğûàä.
+T
+java:S1144"2Remove this unused private "checkValidity" method.(·¥šïÿÿÿÿÿ8Àùôáä.

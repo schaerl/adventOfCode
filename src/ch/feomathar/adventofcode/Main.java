@@ -1,6 +1,6 @@
 package ch.feomathar.adventofcode;
 
-import ch.feomathar.adventofcode.daythree.CrossedWiresKt;
+import ch.feomathar.adventofcode.dayfour.ResponseRecordKt;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,6 +29,11 @@ public class Main {
         // System.out.println(SpiralMemoryKt.findLoc());
         // System.out.println(SpiralMemoryKt.generateWeird());
         // System.out.println(SlicingKt.findOverlaps("src/resources/daythree/2018.txt"));
-        System.out.println(CrossedWiresKt.findIntersect("src/resources/daythree/2019.txt"));
+        // System.out.println(CrossedWiresKt.findIntersect("src/resources/daythree/2019.txt"));
+        // System.out.println(StokingStufferKt.crack());
+        // System.out.println(ObscureSecurityKt.findReal("src/resources/dayfour/2016.txt"));
+        // System.out.println(EntropyPassphrasesKt.countValid("src/resources/dayfour/2017.txt"));
+        // System.out.println(SecureContainerKt.findAllPws());
+        System.out.println(ResponseRecordKt.findSleepy("src/resources/dayfour/2018.txt"));
     }
 }

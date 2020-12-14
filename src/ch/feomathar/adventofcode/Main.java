@@ -1,6 +1,6 @@
 package ch.feomathar.adventofcode;
 
-import ch.feomathar.adventofcode.dayfive.SunnyAsteroidsKt;
+import ch.feomathar.adventofcode.daysix.UniversalOrbitKt;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,6 +39,10 @@ public class Main {
         // System.out.println(PasswordChessKt.findPW());
         // System.out.println(TwistyTrampolinesKt.findExit("src/resources/dayfive/2017.txt"));
         // System.out.println(AlchemicalReactionKt.reduction("src/resources/dayfive/2018.txt"));
-        System.out.println(SunnyAsteroidsKt.diagnose("src/resources/dayfive/2019.txt"));
+        // System.out.println(SunnyAsteroidsKt.diagnose("src/resources/dayfive/2019.txt"));
+        // System.out.println(FireHazardKt.toggle("src/resources/daysix/2015.txt"));
+        // System.out.println(SignalNoiseKt.recover("src/resources/daysix/2016.txt"));
+        // System.out.println(MemoryReallocKt.countCycle("src/resources/daysix/2017.txt"));
+        System.out.println(UniversalOrbitKt.countOrbits("src/resources/daysix/2019.txt"));
     }
 }

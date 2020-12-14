@@ -1,16 +1,0 @@
-
-P
-java:S1128	".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8Ûøèä.
-z	java:S1359"YReduce the total number of break and continue statements in this loop to use at most one.(¹ÎÜ°øÿÿÿÿ8·‰êéä.
-J
-java:S1128
-".Remove this unused import 'java.util.HashSet'.(Ê‚êX8Ûøèä.
-Z
-java:S2147""DCombine this catch with the one at line 32, which has the same body.(ï­£Ä
-L
-java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ8Ûøèä.
-Q
-java:S1128"4Remove this unused import 'java.util.regex.Matcher'.(ëÅ›ã8õÙ÷èä.
-D	java:S131€""Add a default case to this switch.(ıÊ‘ øÿÿÿÿ8áºÊéä.
-V
-java:S1128"4Remove this unused import 'java.util.regex.Pattern'.(Ã•…Äúÿÿÿÿ8›Òöèä.

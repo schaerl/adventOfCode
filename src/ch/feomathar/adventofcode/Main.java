@@ -1,6 +1,6 @@
 package ch.feomathar.adventofcode;
 
-import ch.feomathar.adventofcode.dayfour.ResponseRecordKt;
+import ch.feomathar.adventofcode.dayfive.SunnyAsteroidsKt;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,6 +34,11 @@ public class Main {
         // System.out.println(ObscureSecurityKt.findReal("src/resources/dayfour/2016.txt"));
         // System.out.println(EntropyPassphrasesKt.countValid("src/resources/dayfour/2017.txt"));
         // System.out.println(SecureContainerKt.findAllPws());
-        System.out.println(ResponseRecordKt.findSleepy("src/resources/dayfour/2018.txt"));
+        // System.out.println(ResponseRecordKt.findSleepy("src/resources/dayfour/2018.txt"));
+        // System.out.println(NiceStringKt.findNice("src/resources/dayfive/2015.txt"));
+        // System.out.println(PasswordChessKt.findPW());
+        // System.out.println(TwistyTrampolinesKt.findExit("src/resources/dayfive/2017.txt"));
+        // System.out.println(AlchemicalReactionKt.reduction("src/resources/dayfive/2018.txt"));
+        System.out.println(SunnyAsteroidsKt.diagnose("src/resources/dayfive/2019.txt"));
     }
 }

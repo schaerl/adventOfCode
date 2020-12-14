@@ -1,5 +1,0 @@
-
-U	java:S106"9Replace this use of System.out or System.err by a logger.(È¯¡ˆ8şÂ£àä.
-U	java:S106#"9Replace this use of System.out or System.err by a logger.(ÆÀûı8ıÀ¹àä.
-c
-java:S1192"FDefine a constant instead of duplicating this literal " and " 3 times.(È¯¡ˆ8”œ»àä.

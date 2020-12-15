@@ -75,14 +75,16 @@ class Computer(inMemory: List<Long>) {
             1 -> Add(
                 Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
                 Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                memory[pc + 3].toInt()
+                Parameter(memory[pc + 3], paramTypeStack.removeFirstOrNull() ?: 1)
             )
             2 -> Mul(
                 Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
                 Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                memory[pc + 3].toInt()
+                Parameter(memory[pc + 3], paramTypeStack.removeFirstOrNull() ?: 1)
             )
-            3 -> In(memory[pc + 1].toInt())
+            3 -> In(
+                Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 1)
+            )
             4 -> Out(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0))
             5 -> JIT(
                 Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
@@ -95,12 +97,12 @@ class Computer(inMemory: List<Long>) {
             7 -> LT(
                 Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
                 Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                memory[pc + 3].toInt()
+                Parameter(memory[pc + 3], paramTypeStack.removeFirstOrNull() ?: 1)
             )
             8 -> EQ(
                 Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
                 Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                memory[pc + 3].toInt()
+                Parameter(memory[pc + 3], paramTypeStack.removeFirstOrNull() ?: 1)
             )
             9 -> RBSHIFT(
                 Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0)
@@ -128,16 +130,16 @@ sealed class Operation(private val pcJump: Int) {
     }
 }
 
-data class Add(val orig1: Parameter, val orig2: Parameter, val dest: Int) : Operation(4) {
+data class Add(val orig1: Parameter, val orig2: Parameter, val dest: Parameter) : Operation(4) {
     override fun doExecute(computer: Computer): Boolean {
-        computer.setByte(dest, orig1.getValue(computer) + orig2.getValue(computer))
+        computer.setByte(dest.getDestVal(computer), orig1.getValue(computer) + orig2.getValue(computer))
         return true
     }
 }
 
-data class Mul(val orig1: Parameter, val orig2: Parameter, val dest: Int) : Operation(4) {
+data class Mul(val orig1: Parameter, val orig2: Parameter, val dest: Parameter) : Operation(4) {
     override fun doExecute(computer: Computer): Boolean {
-        computer.setByte(dest, orig1.getValue(computer) * orig2.getValue(computer))
+        computer.setByte(dest.getDestVal(computer), orig1.getValue(computer) * orig2.getValue(computer))
         return true
     }
 }
@@ -149,12 +151,12 @@ object Exit : Operation(0) {
     }
 }
 
-data class In(val pos: Int) : Operation(2) {
+data class In(val pos: Parameter) : Operation(2) {
     override fun doExecute(computer: Computer): Boolean {
         if (computer.stdin.size < 1) {
             return false
         }
-        computer.setByte(pos, computer.stdin.removeFirst().toLong())
+        computer.setByte(pos.getDestVal(computer), computer.stdin.removeFirst().toLong())
         return true
     }
 
@@ -198,16 +200,16 @@ data class JIF(val condition: Parameter, val dest: Parameter) : Operation(3) {
     }
 }
 
-data class LT(val a: Parameter, val b: Parameter, val dest: Int) : Operation(4) {
+data class LT(val a: Parameter, val b: Parameter, val dest: Parameter) : Operation(4) {
     override fun doExecute(computer: Computer): Boolean {
-        computer.setByte(dest, if (a.getValue(computer) < b.getValue(computer)) 1 else 0)
+        computer.setByte(dest.getDestVal(computer), if (a.getValue(computer) < b.getValue(computer)) 1 else 0)
         return true
     }
 }
 
-data class EQ(val a: Parameter, val b: Parameter, val dest: Int) : Operation(4) {
+data class EQ(val a: Parameter, val b: Parameter, val dest: Parameter) : Operation(4) {
     override fun doExecute(computer: Computer): Boolean {
-        computer.setByte(dest, if (a.getValue(computer) == b.getValue(computer)) 1 else 0)
+        computer.setByte(dest.getDestVal(computer), if (a.getValue(computer) == b.getValue(computer)) 1 else 0)
         return true
     }
 }
@@ -228,6 +230,13 @@ data class Parameter(val value: Long, val mode: Int) {
         }
     }
 
+    fun getDestVal(computer: Computer): Int {
+        return when (mode) {
+            0 -> computer.getByte(value.toInt()).toInt()
+            2 -> computer.relBase + value.toInt()
+            else -> value.toInt()
+        }
+    }
 }
 
 enum class ParameterMode {

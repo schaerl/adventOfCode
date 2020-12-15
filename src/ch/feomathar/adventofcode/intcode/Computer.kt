@@ -31,11 +31,13 @@ class Computer(inMemory: List<Int>) {
         pc = 0
     }
 
-    fun runProgram() {
+    fun runProgram(): Operation {
+        var operation: Operation
         do {
-            val operation = getOp()
-            operation.execute(this)
-        } while (operation != Exit)
+            operation = getOp()
+            val canContinue = operation.execute(this)
+        } while (canContinue)
+        return operation
     }
 
     fun addInput(line: String) {
@@ -57,24 +59,36 @@ class Computer(inMemory: List<Int>) {
         }
 
         return when (opCode) {
-            1 -> Add(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
-                    Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                    memory[pc + 3])
-            2 -> Mul(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
-                    Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                    memory[pc + 3])
+            1 -> Add(
+                Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
+                Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
+                memory[pc + 3]
+            )
+            2 -> Mul(
+                Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
+                Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
+                memory[pc + 3]
+            )
             3 -> In(memory[pc + 1])
             4 -> Out(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0))
-            5 -> JIT(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
-                    Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0))
-            6 -> JIF(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
-                    Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0))
-            7 -> LT(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
-                    Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                    memory[pc + 3])
-            8 -> EQ(Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
-                    Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
-                    memory[pc + 3])
+            5 -> JIT(
+                Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
+                Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0)
+            )
+            6 -> JIF(
+                Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
+                Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0)
+            )
+            7 -> LT(
+                Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
+                Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
+                memory[pc + 3]
+            )
+            8 -> EQ(
+                Parameter(memory[pc + 1], paramTypeStack.removeFirstOrNull() ?: 0),
+                Parameter(memory[pc + 2], paramTypeStack.removeFirstOrNull() ?: 0),
+                memory[pc + 3]
+            )
 
             99 -> Exit
             else -> throw ProgramError("Invalid Opcode")
@@ -83,12 +97,16 @@ class Computer(inMemory: List<Int>) {
 }
 
 sealed class Operation(private val pcJump: Int) {
-    open fun execute(computer: Computer) {
-        doExecute(computer)
-        incPc(computer)
+    open fun execute(computer: Computer): Boolean {
+        return if (doExecute(computer)) {
+            incPc(computer)
+            true
+        } else {
+            false
+        }
     }
 
-    abstract fun doExecute(computer: Computer)
+    abstract fun doExecute(computer: Computer): Boolean
 
     protected open fun incPc(computer: Computer) {
         computer.pc += pcJump
@@ -96,39 +114,48 @@ sealed class Operation(private val pcJump: Int) {
 }
 
 data class Add(val orig1: Parameter, val orig2: Parameter, val dest: Int) : Operation(4) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
         computer.setByte(dest, orig1.getValue(computer) + orig2.getValue(computer))
+        return true
     }
 }
 
 data class Mul(val orig1: Parameter, val orig2: Parameter, val dest: Int) : Operation(4) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
         computer.setByte(dest, orig1.getValue(computer) * orig2.getValue(computer))
+        return true
     }
 }
 
 object Exit : Operation(0) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
+        return false
         // NOOP
     }
 }
 
 data class In(val pos: Int) : Operation(2) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
+        if (computer.stdin.size < 1) {
+            return false
+        }
         computer.setByte(pos, computer.stdin.removeFirst().toInt())
+        return true
     }
 
 }
 
 data class Out(val pos: Parameter) : Operation(2) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
         computer.stdout.addLast(pos.getValue(computer).toString())
+        return true
     }
 }
 
 data class JIT(val condition: Parameter, val dest: Parameter) : Operation(3) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
         // NOOP, only affects PC
+        return true
     }
 
     override fun incPc(computer: Computer) {
@@ -142,8 +169,9 @@ data class JIT(val condition: Parameter, val dest: Parameter) : Operation(3) {
 }
 
 data class JIF(val condition: Parameter, val dest: Parameter) : Operation(3) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
         // NOOP, only affects PC
+        return true
     }
 
     override fun incPc(computer: Computer) {
@@ -156,14 +184,16 @@ data class JIF(val condition: Parameter, val dest: Parameter) : Operation(3) {
 }
 
 data class LT(val a: Parameter, val b: Parameter, val dest: Int) : Operation(4) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
         computer.setByte(dest, if (a.getValue(computer) < b.getValue(computer)) 1 else 0)
+        return true
     }
 }
 
 data class EQ(val a: Parameter, val b: Parameter, val dest: Int) : Operation(4) {
-    override fun doExecute(computer: Computer) {
+    override fun doExecute(computer: Computer): Boolean {
         computer.setByte(dest, if (a.getValue(computer) == b.getValue(computer)) 1 else 0)
+        return true
     }
 }
 

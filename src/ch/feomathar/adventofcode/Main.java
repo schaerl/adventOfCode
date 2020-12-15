@@ -1,6 +1,6 @@
 package ch.feomathar.adventofcode;
 
-import ch.feomathar.adventofcode.dayseven.AmplifiedCircuitKt;
+import ch.feomathar.adventofcode.daynine.SensorBoostKt;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,6 +46,7 @@ public class Main {
         // System.out.println(UniversalOrbitKt.countOrbits("src/resources/daysix/2019.txt"));
         // System.out.println(SomeAssemblyKt.getOutput("src/resources/dayseven/2015.txt"));
         // System.out.println(IPV7Kt.getIPs("src/resources/dayseven/2016.txt"));
-        System.out.println(AmplifiedCircuitKt.findMaxInputs("src/resources/dayseven/2019.txt"));
+        // System.out.println(AmplifiedCircuitKt.findMaxInputs("src/resources/dayseven/2019.txt"));
+        System.out.println(SensorBoostKt.boost("src/resources/daynine/2019.txt"));
     }
 }

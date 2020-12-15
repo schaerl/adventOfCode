@@ -7,7 +7,7 @@ import ch.feomathar.adventofcode.util.permute
 
 fun findMaxInputs(fileName: String): Int {
     val input = parseInput(fileName)
-    val code = input[0].split(",").map { it.toInt() }
+    val code = input[0].split(",").map { it.toLong() }
 
     val phaseSettings = permute(arrayListOf(5, 6, 7, 8, 9))
 

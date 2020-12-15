@@ -1,6 +1,6 @@
 package ch.feomathar.adventofcode;
 
-import ch.feomathar.adventofcode.daynine.SensorBoostKt;
+import ch.feomathar.adventofcode.daytwelve.RainRiskKt;
 
 public class Main {
     public static void main(String[] args) {
@@ -47,6 +47,10 @@ public class Main {
         // System.out.println(SomeAssemblyKt.getOutput("src/resources/dayseven/2015.txt"));
         // System.out.println(IPV7Kt.getIPs("src/resources/dayseven/2016.txt"));
         // System.out.println(AmplifiedCircuitKt.findMaxInputs("src/resources/dayseven/2019.txt"));
-        System.out.println(SensorBoostKt.boost("src/resources/daynine/2019.txt"));
+        // System.out.println(SensorBoostKt.boost("src/resources/daynine/2019.txt"));
+        // System.out.println(SpacePoliceKt.paint("src/resources/dayeleven/2019.txt"));
+        // System.out.println(CarePackageKt.countTiles("src/resources/daythirteen/2019.txt"));
+        // System.out.println(RambunctiousRecitationKt.memory());
+        System.out.println(RainRiskKt.getDist("src/resources/daytwelve/2020.txt"));
     }
 }

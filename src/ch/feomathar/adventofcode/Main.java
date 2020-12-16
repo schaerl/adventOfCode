@@ -1,6 +1,6 @@
 package ch.feomathar.adventofcode;
 
-import ch.feomathar.adventofcode.daythirteen.CarePackageKt;
+import ch.feomathar.adventofcode.daysix.ChronalCoordinatesKt;
 
 public class Main {
     public static void main(String[] args) {
@@ -49,11 +49,12 @@ public class Main {
         // System.out.println(AmplifiedCircuitKt.findMaxInputs("src/resources/dayseven/2019.txt"));
         // System.out.println(SensorBoostKt.boost("src/resources/daynine/2019.txt"));
         // System.out.println(SpacePoliceKt.paint("src/resources/dayeleven/2019.txt"));
-        System.out.println(CarePackageKt.countTiles("src/resources/daythirteen/2019.txt"));
+        // System.out.println(CarePackageKt.countTiles("src/resources/daythirteen/2019.txt"));
         // System.out.println(RambunctiousRecitationKt.memory());
         // System.out.println(RainRiskKt.getDist("src/resources/daytwelve/2020.txt"));
         // System.out.println(ShuttleSearchKt.findNearest("src/resources/daythirteen/2020.txt"));
         // System.out.println(DockingDataKt.getMemorySum("src/resources/dayfourteen/2020.txt"));
-        // System.out.println(TicketTranslationKt.findValids("src/resources/daysixteen/2020.txt"));
+        // System.out.println(ChronalCoordinatesKt.largestFinite("src/resources/daysix/2018.txt"));
+        System.out.println(ChronalCoordinatesKt.part2("src/resources/daysix/2018.txt"));
     }
 }

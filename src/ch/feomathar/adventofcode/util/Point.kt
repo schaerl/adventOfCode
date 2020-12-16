@@ -4,6 +4,14 @@ import kotlin.math.abs
 
 class Point(val x: Int, val y: Int) : Comparable<Point> {
 
+    fun getAllNeighbours(): List<Point> {
+        val result = ArrayList<Point>()
+        for (dir in Direction.values()) {
+            result.add(getNeighbour(dir))
+        }
+        return result
+    }
+
     fun getNeighbour(dir: Direction): Point {
         return getInDirection(dir, 1)
     }

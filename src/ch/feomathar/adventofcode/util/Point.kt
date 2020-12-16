@@ -73,7 +73,7 @@ class Point(val x: Int, val y: Int) : Comparable<Point> {
     }
 
     override fun compareTo(other: Point): Int {
-        return if (x - other.x == 0) return y - other.y else x - other.x
+        return if (y - other.y == 0) return x - other.x else y - other.y
     }
 
     operator fun component1(): Int {

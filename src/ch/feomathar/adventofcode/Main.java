@@ -1,6 +1,6 @@
 package ch.feomathar.adventofcode;
 
-import ch.feomathar.adventofcode.daysix.ChronalCoordinatesKt;
+import ch.feomathar.adventofcode.dayeight.MemoryManouverKt;
 
 public class Main {
     public static void main(String[] args) {
@@ -55,6 +55,12 @@ public class Main {
         // System.out.println(ShuttleSearchKt.findNearest("src/resources/daythirteen/2020.txt"));
         // System.out.println(DockingDataKt.getMemorySum("src/resources/dayfourteen/2020.txt"));
         // System.out.println(ChronalCoordinatesKt.largestFinite("src/resources/daysix/2018.txt"));
-        System.out.println(ChronalCoordinatesKt.part2("src/resources/daysix/2018.txt"));
+        // System.out.println(ChronalCoordinatesKt.part2("src/resources/daysix/2018.txt"));
+        // System.out.println(RecursiveCircusKt.findRoot("src/resources/dayseven/2017.txt"));
+        // System.out.println(SumOfPartsKt.getOrder("src/resources/dayseven/2018.txt"));
+        // System.out.println(MatchsticksKt.escape("src/resources/dayeight/2015.txt"));
+        // System.out.println(TwoFactorAuthKt.pixelCount("src/resources/dayeight/2016.txt"));
+        // System.out.println(RegistersKt.largestRegister("src/resources/dayeight/2017.txt"));
+        System.out.println(MemoryManouverKt.sumMetaData("src/resources/dayeight/2018.txt"));
     }
 }
